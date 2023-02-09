@@ -42,7 +42,6 @@ export default function App() {
   function minimizePage(pageId, title, text) {
     const storedPagesDataCopy = storedPagesData;
     // const match = storedPagesDataCopy.find(storedPage => storedPage.id === pageId);
-   
       for (let i = 0; i < storedPagesDataCopy.length; i++) {
         if (storedPagesDataCopy[i].id === pageId) {
           storedPagesDataCopy[i].title = title;
@@ -72,13 +71,11 @@ export default function App() {
 
   function closePage(pageId) {
     const storedPagesDataCopy = storedPagesData;
-    
     //remove the selected page from the stored pages
       for (let i = 0; i < storedPagesDataCopy.length; i++) {
         if (storedPagesDataCopy[i].id === pageId) {
          storedPagesDataCopy.splice(i, 1);
-        }
-      }
+        }}
       //remove the page from display
        setDisplayData([]);
        setStoredPagesData(storedPagesDataCopy);
@@ -86,30 +83,25 @@ export default function App() {
 
   function titleChange(newTitle, id) {
     const storedPagesDataCopy = storedPagesData;
-    const displayDataCopy = displayData;
-    const titleData = newTitle;
+    const titleData = {title: newTitle};
     const pageId = id;
-    for (let i = 0; i < displayDataCopy.length; i++) {
-       if (displayDataCopy[i].id === pageId) {
-        displayDataCopy[i].title = titleData;
-      } else {
-        //do nothing
-      }
-    }
     for (let i = 0; i < storedPagesDataCopy.length; i++) {
       if (storedPagesDataCopy[i].id === pageId) {
-        storedPagesDataCopy[i].title = titleData;
-    } else {
-      //do nothing
+        setDisplayData(
+          [...storedPagesDataCopy.slice(0, i),
+           Object.assign(storedPagesDataCopy[i], titleData),
+           ...storedPagesDataCopy.slice(i + 1)
+          ]
+      );
+          } else {
+            //do nothing
+          }
     }
-  };
-  setDisplayData(displayDataCopy);
-  setStoredPagesData(storedPagesDataCopy);
   }
 
   function textChange(newText, id) {
-    const storedPagesDataCopy = storedPagesData;
-    const displayDataCopy = displayData;
+    let storedPagesDataCopy = storedPagesData;
+    let displayDataCopy = displayData;
     const textData = newText;
     const pageId = id;
     for (let i = 0; i < displayDataCopy.length; i++) {
@@ -119,7 +111,7 @@ export default function App() {
     }
     for (let i = 0; i < storedPagesDataCopy.length; i++) {
       if (storedPagesDataCopy[i].id === pageId) {
-        storedPagesDataCopy[i].text = newText;
+        storedPagesDataCopy[i].text = textData;
     } else {
       //do nothing
     }}
@@ -143,7 +135,7 @@ export default function App() {
     )
   })
 
-  let storedPages = storedPagesData.map((storedPage, index) => {
+  const storedPages = storedPagesData.map((storedPage, index) => {
     return (
       <SidebarItem
       key={storedPage.id}
@@ -155,6 +147,8 @@ export default function App() {
       />
     )
   })
+
+  
 
   //Render
   return (
@@ -173,3 +167,15 @@ export default function App() {
     </div>
   )
 }
+// const handleChange = (e) => {
+//   e.persist();
+//   setStoredPagesData(prevState => (
+//     {
+//       ...prevState, 
+//       values: {...prevState.values, b: e.target.value}
+//     }
+//   ))
+
+//   // 
+  
+// }

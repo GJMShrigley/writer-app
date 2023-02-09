@@ -1,12 +1,18 @@
 import React from "react";
 
 export default function SidebarItem(props) {
+    const [title, setTitle] = React.useState(props.title);
+
+    React.useEffect(() => {
+    // console.log(props);
+        setTitle(props.title)
+    }, [props])
 
     function maximize() {
         props.maximizePage(props.id);
     }
 
     return (
-        <div className="sidebar__item" onClick={maximize}>{props.title}</div>
+        <div className="sidebar__item" onClick={maximize}>{title}</div>
     )
 }

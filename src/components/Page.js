@@ -37,7 +37,7 @@ export default function Page(props) {
     return (
         <div className="page">
             <div className="header">
-                 <textarea className="header__title" type="text" name="text" value={ContentsData.title} onChange={setTitle}></textarea>
+                 <textarea className="header__title" type="text" name="title" value={ContentsData.title} onChange={setTitle}></textarea>
                  <div className="header__buttons">
                     <button className="header__btn header__minimize-btn" onClick={minimize}>_</button>
                     <button className="header__btn header__close-btn" onClick={close}>X</button>
