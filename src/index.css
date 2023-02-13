@@ -67,13 +67,27 @@ body {
 
 .sidebar {
   /* POSITION */
-  position: fixed;
+  position: absolute;
   top: 4.3vh;
+	/* BOX MODEL */
+  width: 4.5vw;
+	/* LAYOUT */
+  display: flex;
+  flex-direction: row;
+	/* TYPOGRAPHY */
+	/* BACKGROUND */
+	/* ANIMATIONS */
+	/* OTHER */
+}
+
+.sidebar__items {
+  /* POSITION */
 	/* BOX MODEL */
   width: 4vw;
   height: 95.2vh;
 	/* LAYOUT */
   display: grid;
+  grid-template-columns: repeat(1, 1fr);
 	/* TYPOGRAPHY */
 	/* BACKGROUND */
   background-color: #222;
@@ -84,6 +98,7 @@ body {
 
 .sidebar__item {
   /* POSITION */
+  position: relative;
 	/* BOX MODEL */
   border: 1px solid #fff;
   border-radius: 1px;
@@ -99,6 +114,20 @@ body {
 	/* ANIMATIONS */
 	/* OTHER */
   cursor: pointer;
+}
+
+.sidebar__drag {
+  /* POSITION */
+	/* BOX MODEL */
+  width: .5vw;
+  height: 95.2vh;
+	/* LAYOUT */
+	/* TYPOGRAPHY */
+	/* BACKGROUND */
+  background-color: #f0f;
+	/* ANIMATIONS */
+	/* OTHER */
+  z-index: 999;
 }
 
 /** SIDEBAR END **/

@@ -27,7 +27,7 @@ export default function Page(props) {
      }
 
     function minimize() {
-        props.minimizePage(ContentsData.id, ContentsData.title, ContentsData.text);   
+        props.minimizePage();   
     }
 
     function close() {

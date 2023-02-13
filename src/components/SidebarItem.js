@@ -4,7 +4,6 @@ export default function SidebarItem(props) {
     const [title, setTitle] = React.useState(props.title);
 
     React.useEffect(() => {
-    // console.log(props);
         setTitle(props.title)
     }, [props])
 
