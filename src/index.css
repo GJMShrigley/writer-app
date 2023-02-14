@@ -70,12 +70,12 @@ body {
   position: absolute;
   top: 4.3vh;
 	/* BOX MODEL */
-  width: 4.5vw;
 	/* LAYOUT */
   display: flex;
   flex-direction: row;
 	/* TYPOGRAPHY */
 	/* BACKGROUND */
+  background-color: #fff;
 	/* ANIMATIONS */
 	/* OTHER */
 }
@@ -83,8 +83,6 @@ body {
 .sidebar__items {
   /* POSITION */
 	/* BOX MODEL */
-  width: 4vw;
-  height: 95.2vh;
 	/* LAYOUT */
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -93,6 +91,7 @@ body {
   background-color: #222;
 	/* ANIMATIONS */
 	/* OTHER */
+  overflow: hidden;
   z-index: 999;
 }
 
@@ -119,12 +118,15 @@ body {
 .sidebar__drag {
   /* POSITION */
 	/* BOX MODEL */
-  width: .5vw;
+  border: 1px solid #fff;
+  border-radius: 1px;
+  width: 1.2rem;
   height: 95.2vh;
 	/* LAYOUT */
 	/* TYPOGRAPHY */
+  color: #fff;
 	/* BACKGROUND */
-  background-color: #f0f;
+  background-color: #000;
 	/* ANIMATIONS */
 	/* OTHER */
   z-index: 999;

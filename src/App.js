@@ -1,20 +1,30 @@
 import React from "react";
 import Page from "./components/Page";
-import SidebarItem from "./components/SidebarItem";
+import Sidebar from "./components/Sidebar";
+// import SidebarItem from "./components/SidebarItem";
 
 export default function App() {
-  
-  // const sidebar = document.getElementsByClassName('sidebar__drag')[0];
+  //access stylesheet for manipulation
+  const stylesheet = document.styleSheets[0].cssRules;
+
+  //create sidebar variable for manipulation
+  let sidebar
+  for(var i = 0; i < stylesheet.length; i++) {
+    var cssStyles = stylesheet[i];
+    if(cssStyles.selectorText === ".sidebar") {
+      sidebar = cssStyles;
+    }
+  }
 
   const [pageCount, setPageCount] = React.useState(0);
   const [displayData, setDisplayData] = React.useState([]);
   const [storedPages, setStoredPages] = React.useState([]);
-  const [size, setSize] = React.useState({ x: 400, y: 300 });
+  
 
   function newPage() {
     const storedPagesCopy = storedPages;
     const sidebarLength = Math.ceil(storedPagesCopy.length / 20);
-    const stylesheet = document.styleSheets[0].rules;
+    
     //add new page to storedPages state
     if (storedPagesCopy) {
     setStoredPages(prevstoredPages => {
@@ -39,11 +49,11 @@ export default function App() {
     );
     //add new column to sidebar when current column is full
     for(var i = 0; i < stylesheet.length; i++) {
-      var selector = stylesheet[i];
-      if(selector.selectorText === ".sidebar") {
-       selector.style.gridTemplateColumns = `repeat(${sidebarLength},1fr)`;
+      var cssStyles = stylesheet[i];
+      if(cssStyles.selectorText === ".sidebar__items") {
+        cssStyles.style.gridTemplateColumns = `repeat(${sidebarLength},1fr)`;
       }
-  }
+    }
   }
 
   function minimizePage() {
@@ -119,26 +129,7 @@ export default function App() {
     setStoredPages(storedPagesCopy);
   }
 
-  const handler = (mouseDownEvent) => {
-    const startSize = size;
-    const startPosition = { x: mouseDownEvent.pageX, y: mouseDownEvent.pageY };
-    
-    function onMouseMove(mouseMoveEvent) {
-      console.log(mouseMoveEvent.pageX, mouseMoveEvent.pageY)
-      setSize(currentSize => ({ 
-        x: startSize.x - startPosition.x + mouseMoveEvent.pageX, 
-        y: startSize.y - startPosition.y + mouseMoveEvent.pageY 
-      }));
-    }
-    function onMouseUp() {
-      document.body.removeEventListener("mousemove", onMouseMove);
-      // uncomment the following line if not using `{ once: true }`
-      // document.body.removeEventListener("mouseup", onMouseUp);
-    }
-    
-    document.body.addEventListener("mousemove", onMouseMove);
-    document.body.addEventListener("mouseup", onMouseUp, { once: true });
-  };
+  
   
   //display contents of state objects
   const displayPagesMap = displayData.map((page) => {
@@ -156,23 +147,6 @@ export default function App() {
     )
   })
 
-  const storedPagesMap = storedPages.map((storedPage, index) => {
-    return (
-      <SidebarItem
-      key={storedPage.id}
-      id={storedPage.id}
-      index={index}
-      title={storedPage.title} 
-      maximizePage={maximizePage}
-      text={storedPage.text}
-      />
-    )
-  })
-
-  //add event listeners
-  // const moveSidebar = sidebar.addEventListener('mousedown', resizeSidebar());
-
-
   //render
   return (
     <div className="window">
@@ -181,12 +155,10 @@ export default function App() {
         <button className="top-menu-buttons__new-page" onClick={newPage}>CREATE A NEW PAGE</button>
       </section>
     </div>
-    <div className="sidebar" style={{ width: size.x, height: size.y }}>
-      <section className="sidebar__items">
-          {storedPagesMap}
-      </section>
-      <button className="sidebar__drag" type="button" onMouseDown={handler}></button>
-    </div>
+    <Sidebar 
+      storedPages={storedPages}
+      maximizePage={maximizePage}
+      />
     <section className="display">
       {displayPagesMap}
     </section>
