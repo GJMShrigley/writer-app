@@ -30,13 +30,25 @@ export default function App() {
     setStoredPages(prevstoredPages => {
       return [...prevstoredPages, {
         id: (pageCount),
-        title: "New Page",
+        title: "New Page", 
+        textContents: [{
+          key: "text0",
+          id: "text0",
+          boxTitle: "",
+          body: ""
+        }]
       }];
     });
     } else {
       setStoredPages([{
         id: (pageCount),
-        title: "New Page",
+        title: "New Page", 
+        textContents: [{
+          key: "text0",
+          id: "text0",
+          boxTitle: "",
+          body: ""
+        }]
       }])
     }
     //update pageCount state to generate new page ids
@@ -44,7 +56,13 @@ export default function App() {
     //update displayData state with an empty page
      setDisplayData([{
         id: (pageCount),
-        title: "New Page",    
+        title: "New Page", 
+        textContents: [{
+          key: "text0",
+          id: "text0",
+          boxTitle: "",
+          body: ""
+        }]
       }]
     );
     //add new column to sidebar when current column is full
@@ -69,7 +87,7 @@ export default function App() {
           setDisplayData([{
             id: pageId,
             title: storedPagesCopy[i].title,
-            text: storedPagesCopy[i].text
+            textContents: storedPagesCopy[i].textContents
           }])
       }
     };
@@ -109,24 +127,34 @@ export default function App() {
     setStoredPages(storedPagesCopy);
   }
 
-  function textChange(newText, id) {
+  function contentsChange(newContents, id) {
     const storedPagesCopy = storedPages;
-    const displayDataCopy = displayData;
-    const textData = newText;
+    const contentsData = {textContents: newContents};
     const pageId = id;
-    for (let i = 0; i < displayDataCopy.length; i++) {
-       if (displayDataCopy[i].id === pageId) {
-        displayDataCopy[i].text = textData;
-      }
-    }
     for (let i = 0; i < storedPagesCopy.length; i++) {
       if (storedPagesCopy[i].id === pageId) {
-        storedPagesCopy[i].text = textData;
+        console.log(newContents, id, storedPagesCopy)
+        setDisplayData(
+          [...storedPagesCopy.slice(0, i),
+           Object.assign(storedPagesCopy[i], contentsData),
+           ...storedPagesCopy.slice(i + 1)
+          ]
+        );
     } else {
       //do nothing
     }}
-    setDisplayData(displayDataCopy);
-    setStoredPages(storedPagesCopy);
+    for (let i = 0; i < storedPagesCopy.length; i++) {
+      if (storedPagesCopy[i].id === pageId) {
+        setStoredPages(
+          [...storedPagesCopy.slice(0, i),
+           Object.assign(storedPagesCopy[i], contentsData),
+           ...storedPagesCopy.slice(i + 1)
+          ]
+        )
+      } else {
+        //do nothing
+      }
+    }
   }
 
   
@@ -138,11 +166,11 @@ export default function App() {
       key={page.id}
       id={page.id}
       title={page.title} 
-      text={page.text}
+      textContents={page.textContents}
       minimizePage={minimizePage}
       closePage={closePage}
       titleChange={titleChange}
-      textChange={textChange}
+      contentsChange={contentsChange}
       />
     )
   })

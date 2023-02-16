@@ -1,29 +1,60 @@
 import React from "react";
 
 export default function Page(props) {
-
+     const [itemCount, setItemCount] = React.useState(1);
      const [ContentsData, setContentsData] = React.useState(props);
-     
+     const [textContents, setTextContents] = React.useState(props.textContents);
+
      function setTitle(event) {
-        const newTitle = event.target.value;
          setContentsData (prevContentsData => {
              return {
                  ...prevContentsData,
-                 title: newTitle
+                 title: event.target.value
              };
          }); 
-         props.titleChange(newTitle, props.id);
+         props.titleChange(event.target.value, props.id);
      }  
 
-     function setContents(event) {
-         const newText = event.target.value;
-         setContentsData (prevContentsData => {
-             return {
-                 ...prevContentsData,
-                 text: newText
-             };
-         }); 
-         props.textChange(newText, props.id);
+     function addTextBox() {
+        const id = `text${itemCount}`
+        setItemCount(itemCount + 1);
+        setTextContents(prevTextContents => {
+            return [
+                ...prevTextContents,
+                {
+                key:id,
+                id: id,
+                boxTitle: "",
+                body: ""}
+            ]
+        })
+        props.contentsChange(textContents, props.id)
+     }
+
+     function setTextBoxContents(event) {
+        const textContentsCopy = textContents;
+        const newText = {body: event.target.value};
+        const boxId = event.target.id;
+
+         for (let i = 0; i < textContentsCopy.length; i++) {
+            if (textContentsCopy[i].id === boxId) {
+                setTextContents(
+                [...textContentsCopy.slice(0, i),
+                 Object.assign(textContentsCopy[i], newText),
+                 ...textContentsCopy.slice(i + 1)
+                ]
+            );
+                } else {
+                  //do nothing
+                }
+          }
+        setContentsData(prevContentsData => {
+            return {
+                ...prevContentsData,
+                textContents
+            }
+        })
+        props.contentsChange(textContents, props.id);
      }
 
     function minimize() {
@@ -33,6 +64,16 @@ export default function Page(props) {
     function close() {
         props.closePage(ContentsData.id);
     }
+    
+    const textBoxesMap = textContents.map((textBox) => {
+        return (
+            <textarea className="contents__text-field" type="text" placeholder="Enter text" name="text" id={textBox.id} key={textBox.key} value={textBox.body} onChange={setTextBoxContents}></textarea>
+        )
+    })
+
+    React.useEffect(()=> {
+        setContentsData(props)
+      }, [props]);
 
     return (
         <div className="page">
@@ -43,7 +84,12 @@ export default function Page(props) {
                     <button className="header__btn header__close-btn" onClick={close}>X</button>
                 </div>
             </div>
-            <textarea className="page__text-field" type="text" placeholder="Enter text" name="text" value={ContentsData.text} onChange={setContents}></textarea>
+            <div className="sub-header">
+                <button className="sub-header__button" onClick={addTextBox}>Add Text Box</button>
+            </div>
+            <div className="contents">
+                {textBoxesMap}
+            </div>
         </div>
     )
 

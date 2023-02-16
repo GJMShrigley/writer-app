@@ -13,11 +13,19 @@ export default function Sidebar(props) {
           id={storedPage.id}
           index={index}
           title={storedPage.title} 
-          maximizePage={storedPage.maximizePage}
+          maximizePage={props.maximizePage}
           text={storedPage.text}
           />
         )
       })
+
+    function expandSidebar() {
+      if (size.x > 4) {
+        setSize({x: 4});
+      } else if (size.x == 4) {
+        setSize({x: 50});
+      }
+    }  
 
     const mouseHandler = (mouseDownEvent) => {
         const startSize = size;
@@ -28,12 +36,11 @@ export default function Sidebar(props) {
 
             if (newSize.x > 30 && newSize.x < (window.innerWidth - 50)) {
                 setSize(currentSize => (newSize))
-            } else if (newSize.x < 30) {
-                setSize(currentSize => ({x: 30}))
+            } else if (newSize.x < 4) {
+                setSize(currentSize => ({x: 4}))
             } else if (newSize.x > (window.innerWidth - 50)) {
                 setSize(currentSize => ({x: (window.innerWidth - 50)}))
             }
-            console.log(window.innerWidth, newSize.x)
         }
         function onMouseUp() {
             document.body.removeEventListener("mousemove", onMouseMove);
@@ -45,14 +52,14 @@ export default function Sidebar(props) {
 
       React.useEffect(()=> {
         setStoredPages(props.storedPages)
-      }, [props])
+      }, [props]);
     
     return (
     <div className="sidebar" >
       <section className="sidebar__items" style={{ width: size.x, height: (window.innerHeight - 45) }}>
           {storedPagesMap}
       </section>
-      <button className="sidebar__drag" type="button" onMouseDown={mouseHandler}>></button>
+      <button className="sidebar__drag" type="button" onDoubleClick={expandSidebar} onMouseDown={mouseHandler}>></button>
     </div>
     )
 }
