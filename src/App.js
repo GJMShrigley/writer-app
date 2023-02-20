@@ -35,7 +35,9 @@ export default function App() {
           key: "text0",
           id: "text0",
           boxTitle: "",
-          body: ""
+          body: "",
+          x: 500,
+          y: 100
         }]
       }];
     });
@@ -47,7 +49,9 @@ export default function App() {
           key: "text0",
           id: "text0",
           boxTitle: "",
-          body: ""
+          body: "",
+          x: 500,
+          y: 100
         }]
       }])
     }
@@ -61,7 +65,9 @@ export default function App() {
           key: "text0",
           id: "text0",
           boxTitle: "",
-          body: ""
+          body: "",
+          x: 500,
+          y: 100
         }]
       }]
     );
@@ -113,18 +119,19 @@ export default function App() {
     //update the displayed page with new title data
     for (let i = 0; i < storedPagesCopy.length; i++) {
       if (storedPagesCopy[i].id === pageId) {
-        setDisplayData(
+        setStoredPages(
           [...storedPagesCopy.slice(0, i),
-           Object.assign(storedPagesCopy[i], titleData),
-           ...storedPagesCopy.slice(i + 1)
-          ]
-      );
+            Object.assign(storedPagesCopy[i], titleData),
+            ...storedPagesCopy.slice(i + 1)
+           ]
+        );
+        setDisplayData(
+          [storedPages[i]]
+          );
           } else {
             //do nothing
           }
     }
-    //update the stored pages state with the updated array
-    setStoredPages(storedPagesCopy);
   }
 
   function contentsChange(newContents, id) {
@@ -133,24 +140,15 @@ export default function App() {
     const pageId = id;
     for (let i = 0; i < storedPagesCopy.length; i++) {
       if (storedPagesCopy[i].id === pageId) {
-        console.log(newContents, id, storedPagesCopy)
-        setDisplayData(
-          [...storedPagesCopy.slice(0, i),
-           Object.assign(storedPagesCopy[i], contentsData),
-           ...storedPagesCopy.slice(i + 1)
-          ]
-        );
-    } else {
-      //do nothing
-    }}
-    for (let i = 0; i < storedPagesCopy.length; i++) {
-      if (storedPagesCopy[i].id === pageId) {
         setStoredPages(
           [...storedPagesCopy.slice(0, i),
            Object.assign(storedPagesCopy[i], contentsData),
            ...storedPagesCopy.slice(i + 1)
           ]
         )
+         setDisplayData(
+          [storedPages[i]]
+         )
       } else {
         //do nothing
       }

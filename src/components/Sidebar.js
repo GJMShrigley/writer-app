@@ -27,14 +27,14 @@ export default function Sidebar(props) {
       }
     }  
 
-    const mouseHandler = (mouseDownEvent) => {
+    const sizeHandler = (mouseDownEvent) => {
         const startSize = size;
         const startPosition = { x: mouseDownEvent.pageX };
         
         function onMouseMove(mouseMoveEvent) {
             const newSize = { x: startSize.x - startPosition.x + mouseMoveEvent.pageX }
 
-            if (newSize.x > 30 && newSize.x < (window.innerWidth - 50)) {
+            if (newSize.x > 4 && newSize.x < (window.innerWidth - 50)) {
                 setSize(currentSize => (newSize))
             } else if (newSize.x < 4) {
                 setSize(currentSize => ({x: 4}))
@@ -59,7 +59,7 @@ export default function Sidebar(props) {
       <section className="sidebar__items" style={{ width: size.x, height: (window.innerHeight - 45) }}>
           {storedPagesMap}
       </section>
-      <button className="sidebar__drag" type="button" onDoubleClick={expandSidebar} onMouseDown={mouseHandler}>></button>
+      <button className="sidebar__drag" type="button" onDoubleClick={expandSidebar} onMouseDown={sizeHandler}>></button>
     </div>
     )
 }
