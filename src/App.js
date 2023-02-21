@@ -34,10 +34,10 @@ export default function App() {
         textContents: [{
           key: "text0",
           id: "text0",
-          boxTitle: "",
+          title: "",
           body: "",
-          x: 500,
-          y: 100
+          x: (window.innerWidth - 50),
+          y: 200
         }]
       }];
     });
@@ -48,10 +48,10 @@ export default function App() {
         textContents: [{
           key: "text0",
           id: "text0",
-          boxTitle: "",
+          title: "",
           body: "",
-          x: 500,
-          y: 100
+          x: (window.innerWidth - 50),
+          y: 200
         }]
       }])
     }
@@ -64,10 +64,10 @@ export default function App() {
         textContents: [{
           key: "text0",
           id: "text0",
-          boxTitle: "",
+          title: "",
           body: "",
-          x: 500,
-          y: 100
+          x: (window.innerWidth - 50),
+          y: 200
         }]
       }]
     );

@@ -3,7 +3,7 @@ import React from "react";
 import SidebarItem from "./SidebarItem";
 
 export default function Sidebar(props) {
-    const [size, setSize] = React.useState({ x: 30 });
+    const [size, setSize] = React.useState({ x: 4 });
     const [storedPages, setStoredPages] = React.useState(props.storedPages);
 
     let storedPagesMap = storedPages.map((storedPage, index) => {
@@ -56,10 +56,10 @@ export default function Sidebar(props) {
     
     return (
     <div className="sidebar" >
-      <section className="sidebar__items" style={{ width: size.x, height: (window.innerHeight - 45) }}>
+      <section className="sidebar__items-list" style={{ width: size.x, height: (window.innerHeight - 45) }}>
           {storedPagesMap}
       </section>
-      <button className="sidebar__drag" type="button" onDoubleClick={expandSidebar} onMouseDown={sizeHandler}>></button>
+      <button className="sidebar__resize" type="button" onDoubleClick={expandSidebar} onMouseDown={sizeHandler}>></button>
     </div>
     )
 }

@@ -35,8 +35,8 @@ export default function Page(props) {
                 id: id,
                 boxTitle: "",
                 body: "",
-                x: 500,
-                y: 100
+                x: (window.innerWidth - 50),
+                y: 200
             }];
         });
          props.contentsChange(textBoxes, props.id)
